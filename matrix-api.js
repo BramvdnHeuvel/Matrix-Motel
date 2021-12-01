@@ -135,10 +135,20 @@ class Room {
     /**
      * Get a room's current state.
      * 
-     * @param {*} stateName 
-     * @param {*} stateKey 
+     * @param {string}   stateName 
+     * @param {function} callback 
+     * @param {string}   stateKey
      */
-    getState(stateName, stateKey) {}
+    getState(stateName, callback, stateKey = '') {
+        const self = this;
+
+        self.motel.client.getStateEvent(self.id, 
+                                        stateName, 
+                                        stateKey).then(
+            callback
+        );
+    }
+
 
     /**
      * Join a room.
@@ -172,6 +182,24 @@ class Room {
     }
 
     /**
+     * Send a state event to the room.
+     * 
+     * @param {string}   stateName 
+     * @param {Object}   value 
+     * @param {function} callback 
+     * @param {string}   stateKey
+     */
+    sendState(stateName, value, callback, stateKey = '') {
+        const self = this;
+
+        self.motel.client.sendStateEvent(self.id,
+                                         stateName,
+                                         value,
+                                         stateKey
+        ).then(callback);
+    }
+
+    /**
      * Get the latest list of who has which permissions in the room.
      * 
      * @return {Object}
@@ -180,9 +208,9 @@ class Room {
         const self = this;
         let state  = null;
 
-        self.motel.getStateEvent(self.id, 'm.room.power_levels', '').then(
-            function(s) {state = s}
-        );
+        self.getState('m.room.power_levels', function(s) {
+            state = s;
+        }, '');
 
         if (state !== null) {
             self.__state = state;
