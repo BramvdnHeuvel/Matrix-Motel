@@ -149,6 +149,40 @@ class Room {
         );
     }
 
+    /**
+     * Initialize a Matrix room to become a Matrix Motel room.
+     */
+    initMotel() {
+        const self = this;
+        let state  = self.permissions;
+
+        // Admin permissions
+        state.events['com.matrixmotel.welcome']          = 100;
+        state.events['com.matrixmotel.room_shape']       = 100;
+        state.events['com.matrixmotel.sprites']          = 100;
+        
+        // Moderator permissions
+        state.events['com.matrixmotel.force_teleport']   =  50;
+        state.events['com.matrixmotel.force_move']       =  50;
+        state.events['com.matrixmotel.teleport']         =  50;
+        state.events['com.matrixmotel.background']       =  50;
+        state.events['com.matrixmotel.foreground']       =  50;
+
+        // Default permissions
+        state.events['com.matrixmotel.position']         =   0;
+        state.events['com.matrixmotel.enter']            =   0;
+        state.events['com.matrixmotel.exit']             =   0;
+        state.events['com.matrixmotel.move']             =   0;
+            
+        self.sendState('m.room.power_levels', state,
+            function() {
+                console.log(
+                    "Successfully built a Matrix Motel!"
+                );
+            }, ''
+        );
+        self.welcomeMotelUsers(true, 'Come join my Matrix Motel room!');
+    }
 
     /**
      * Join a room.
@@ -197,6 +231,25 @@ class Room {
                                          value,
                                          stateKey
         ).then(callback);
+    }
+
+    /**
+     * Determine whether Matrix Motel users are welcome in this room.
+     * 
+     * @param {boolean} welcome 
+     * @param {string}  reason 
+     */
+    welcomeMotelUsers(welcome, reason = '') {
+        this.sendState('com.matrixmotel.welcome', {
+            welcome: welcome,
+            reason : reason
+        }, function() {
+            if (welcome) {
+                console.log("Matrix Motel users are now welcome in this room!");
+            } else {
+                console.log("Matrix Motel users are no longer welcome in this room.");
+            }
+        });
     }
 
     /**
