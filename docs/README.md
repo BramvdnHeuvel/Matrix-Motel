@@ -8,15 +8,16 @@ These events are not in the Matrix specification, but will be used by Matrix Mot
 
 ## `com.matrixmotel.welcome`
 
-The event type `com.matrixmotel.welcome` indicates whether Matrix Motel clients are allowed to join a certain room. This state is non-binding, but it helps clarify whether Matrix Motel clients are welcome in a room.
+The event type `com.matrixmotel.welcome` indicates whether Matrix Motel clients are welcome to join a certain room. This state is non-binding, but it helps clarify whether Matrix Motel clients are welcome in a room.
 
 Matrix Motel clients send a lot of Matrix Motel-related events that could be spammy for other clients. Your client should respect this state and keep users out of rooms that do not welcome Matrix Motel clients.
 
-The state content has the key `allowed`, which can be set to either `true` or `false`.
+The state content has the key `welcome`, which can be set to either `true` or `false`. Optionally, it contains the `message` key to give a short message about the room.
 
 ```json
 {
-    "allowed": true
+    "welcome": true,
+    "message": "Welcome to my room!"
 }
 ```
 

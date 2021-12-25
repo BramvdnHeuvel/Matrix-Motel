@@ -4,27 +4,26 @@ class RoomManager {
 
         self.controller = motelController;
         self.rooms = {
+            "!placeholder:as.an.example.com": undefined
 //          "!example:matrix.org" : <Room object for !example:matrix.org>
         };
 
         self.controller.client.on("Room.timeline", function(event, room,
                                                             toStartOfTimeline)
             {
-                const self = this;
-                console.log(event);
-
                 if (event.event.room_id === undefined) {
                     return;
                 }
 
                 let roomID = event.getRoomId();
-                console.log(self);
+                
                 if (self.rooms[roomID] === undefined) {
                     return;
                 }
 
                 let sender = event.getSender();
                 let key    = event.getStateKey();
+                
                 self.rooms[roomID].handleEvent(event, sender, key);
             }
         );

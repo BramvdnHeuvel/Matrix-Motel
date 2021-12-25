@@ -18,7 +18,7 @@ class Room {
         self.eventHandlers = {
             "m.room.message": function(e, s) {
                 // TODO: Have avatar say something
-                console.log(s + "> " + e.event.content.body);
+                console.log(s.event.sender + "> " + e.event.content.body);
             },
             "m.room.power_levels": function(e) {
                 self.__state = e.event.content;
