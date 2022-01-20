@@ -47,6 +47,22 @@ There are several methods of exiting a room - and the methods are separately cla
 
 ## `com.matrixmotel.force_teleport`
 
+The event type `com.matrixmotel.force_teleport` lets users teleport other users' avatars. This event is usually reserved for moderators of a room and is meant to move other users to a spot that they otherwise cannot reach using the `com.matrixmotel.move` event.
+
+|  Key   |  Value  |         Description          |
+|--------|---------|------------------------------|
+| target | MXID    | Which user to teleport.      |
+|  row   | Integer | Which row to teleport to.    |
+| column | Integer | Which column to teleport to. |
+
+```json
+{
+    "target": "@alice:example.com",
+    "row": 10,
+    "column": 5
+}
+```
+
 ## `com.matrixmotel.move`
 
 ## `com.matrixmotel.position`
@@ -88,6 +104,21 @@ Here are the keys implemented in the `com.matrixmotel.room_shape` event:
 ## `com.matrixmotel.sprites`
 
 ## `com.matrixmotel.teleport`
+
+The event type `com.matrixmotel.teleport` updates the location of an avatar without specifying a route. This event is usually reserved for moderators of a room.
+
+|  Key   |  Value  |         Description          |
+|--------|---------|------------------------------|
+|  row   | Integer | Which row to teleport to.    |
+| column | Integer | Which column to teleport to. |
+
+```json
+{
+    "row": 10,
+    "column": 5
+}
+```
+
 
 ## `com.matrixmotel.welcome`
 
