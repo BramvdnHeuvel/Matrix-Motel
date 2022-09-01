@@ -65,6 +65,29 @@ The event type `com.matrixmotel.force_teleport` lets users teleport other users'
 
 ## `com.matrixmotel.move`
 
+The event type `com.matrixmotel.move` updates the location of an avatar with a specified route. The route must start with the starting position and end with the final position of the user.
+
+To validate a route, two checks must be made:
+
+1. The user's permission level must be at least as high as the permission level of every tile on the path as defined in `com.matrixmotel.room_shape`.
+2. The user must be able to reach the starting position from a starting location as defined in `com.matrixmotel.room_shape`. This means that there must either be no defined `starter` key, or the user must've theoretically been allowed to walk to its starting position before this event.
+
+|  Key   |  Value  |         Description          |
+|--------|---------|------------------------------|
+|  path  |  List   | List of tiles to walk on.    |
+
+```json
+{
+    "path": [
+        {"row":  8, "column": 7},
+        {"row":  8, "column": 6},
+        {"row":  9, "column": 6},
+        {"row": 10, "column": 6},
+        {"row": 10, "column": 5}
+    ]
+}
+```
+
 ## `com.matrixmotel.position`
 
 ## `com.matrixmotel.room_shape`
@@ -126,7 +149,10 @@ The event type `com.matrixmotel.welcome` indicates whether Matrix Motel clients 
 
 Matrix Motel clients send a lot of Matrix Motel-related events that could be spammy for other clients. Your client should respect this state and keep users out of rooms that do not welcome Matrix Motel clients.
 
-The state content has the key `welcome`, which can be set to either `true` or `false`. Optionally, it contains the `message` key to give a short message about the room.
+|  Key    |  Value  |                 Description                  |
+|---------|---------|----------------------------------------------|
+| welcome | Boolean | Whether Matrix Motel clients are welcome     |
+| message | Integer | Exclusive description for Matrix Motel users |
 
 ```json
 {
