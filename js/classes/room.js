@@ -23,20 +23,6 @@ class Room {
             "m.room.power_levels": function(e) {
                 self.__state = e.event.content;
             },
-            "com.matrixmotel.welcome": function(e, s, key) {
-                if (key !== "") {
-                    return;
-                }
-                if (e.event.content.welcome === true) {
-                    return;
-                } else if (e.event.content.welcome === false) {
-                    // We are no longer welcome. :(
-                    // We don't necessarily want to leave,
-                    // however, in case our user has
-                    // different sessions on this account.
-                    // self.leave();
-                }
-            },
             "com.matrixmotel.room_shape": function(e) {
                 // TODO: 
             },
@@ -169,7 +155,6 @@ class Room {
         let state  = self.permissions;
 
         // Admin permissions
-        state.events['com.matrixmotel.welcome']          = 100;
         state.events['com.matrixmotel.room_shape']       = 100;
         state.events['com.matrixmotel.sprites']          = 100;
         
@@ -193,7 +178,6 @@ class Room {
                 );
             }, ''
         );
-        self.welcomeMotelUsers(true, 'Come join my Matrix Motel room!');
     }
 
     /**
@@ -243,25 +227,6 @@ class Room {
                                          value,
                                          stateKey
         ).then(callback);
-    }
-
-    /**
-     * Determine whether Matrix Motel users are welcome in this room.
-     * 
-     * @param {boolean} welcome 
-     * @param {string}  reason 
-     */
-    welcomeMotelUsers(welcome, reason = '') {
-        this.sendState('com.matrixmotel.welcome', {
-            welcome: welcome,
-            reason : reason
-        }, function() {
-            if (welcome) {
-                console.log("Matrix Motel users are now welcome in this room!");
-            } else {
-                console.log("Matrix Motel users are no longer welcome in this room.");
-            }
-        });
     }
 
     /**

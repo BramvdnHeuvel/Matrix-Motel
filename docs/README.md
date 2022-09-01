@@ -141,22 +141,3 @@ The event type `com.matrixmotel.teleport` updates the location of an avatar with
     "column": 5
 }
 ```
-
-
-## `com.matrixmotel.welcome`
-
-The event type `com.matrixmotel.welcome` indicates whether Matrix Motel clients are welcome to join a certain room. This state is non-binding, but it helps clarify whether Matrix Motel clients are welcome in a room.
-
-Matrix Motel clients send a lot of Matrix Motel-related events that could be spammy for other clients. Your client should respect this state and keep users out of rooms that do not welcome Matrix Motel clients.
-
-|  Key    |  Value  |                 Description                  |
-|---------|---------|----------------------------------------------|
-| welcome | Boolean | Whether Matrix Motel clients are welcome     |
-| message | Integer | Exclusive description for Matrix Motel users |
-
-```json
-{
-    "welcome": true,
-    "message": "Welcome to my room!"
-}
-```

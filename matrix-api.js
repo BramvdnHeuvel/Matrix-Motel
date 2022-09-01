@@ -12,7 +12,6 @@ function initMotelRoom(roomId) {
         function(state) {
             
             // Admin permissions
-            state.events['com.matrixmotel.welcome']          = 100;
             state.events['com.matrixmotel.room_shape']       = 100;
             state.events['com.matrixmotel.sprites']          = 100;
             
